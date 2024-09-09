@@ -23,7 +23,6 @@ class Operation:
 
 class Add(Operation):
     def forward(self, x: Tensor, y: Tensor):
-        print(f"x type: {type(x)}, y type: {type(y)}")
         self.inputs = [x, y]
         self.output = Tensor(
             np.add(x, y),

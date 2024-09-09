@@ -18,9 +18,18 @@ class Tensor(np.ndarray):
         obj._op = None  # This is the operation of Tensor, if there is
         return obj
 
-    # def __getitem__(self, key):
-    #     sliced_array = super(Tensor, self).__getitem__(key)
-    #     return Tensor(sliced_array, requires_grad=self.requires_grad)
+    def __array_finalize__(self, obj) -> None:
+        # Changing __array_finalize__ is important because, whenever we
+        # perform operations like slicing, NumPy creates a new array for
+        # optimization purposes. Therefore, we need to ensure that
+        # our attributes persist
+
+        if obj is None:
+            return
+
+        self.requires_grad = getattr(obj, 'requires_grad', False)
+        self.grad = getattr(obj, 'grad', None)
+        self._op = getattr(obj, '_op', None)
 
     def __add__(self, other: 'Tensor') -> 'Tensor':
         from .operations import Add
@@ -43,7 +52,7 @@ class Tensor(np.ndarray):
             self.grad = np.zeros_like(self)
 
         if grad is None:
-            grad = np.zeros_like(self)
+            grad = np.ones_like(self)
 
         self.grad += grad
 
