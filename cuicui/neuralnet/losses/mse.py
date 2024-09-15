@@ -13,13 +13,11 @@ class MSE(Loss):
         self.predicted = predicted
         self.target = target
 
-        self.loss = Tensor(
-            np.mean((predicted - target)**2),
-            requires_grad=False
-        )
+        self.loss = Tensor(np.mean((predicted - target)**2))
         return self.loss
 
-    def backward(self) -> None:
+    def backward(self) -> Tensor:
         # Calculate gradient of MSE function
         grad = 2 * (self.predicted - self.target) / self.predicted.size
         self.predicted.backward(grad)
+        return grad

@@ -3,7 +3,7 @@ import numpy as np
 
 from ..activations import Activation
 from .base import Layer
-from ..core import Tensor, initializers as init
+from ..core import Tensor, initializers as initial
 
 
 class Dense(Layer):
@@ -12,7 +12,7 @@ class Dense(Layer):
         input_size: int,
         output_size: int,
         activation: Activation = None,
-        initializer: Callable = init.random
+        initializer: Callable = initial.random
     ) -> None:
         super().__init__()
 
@@ -20,9 +20,12 @@ class Dense(Layer):
             initializer(input_size, output_size),
             requires_grad=True
         )
-        self.biases = init.zeros(output_size)
+        self.biases = Tensor(
+            initial.zeros(output_size),
+            requires_grad=True
+        )
         self.activation = activation
-        self.paramters = [self.weights, self.biases]
+        self.parameters = [self.weights, self.biases]
 
     def forward(self, input: Tensor) -> Tensor:
         self.input = input
@@ -40,6 +43,8 @@ class Dense(Layer):
         grad_weights = self.input.T @ grad_output
         grad_bias = np.sum(grad_output, axis=0, keepdims=True)
         self.gradients = [grad_weights, grad_bias]
+        self.weights.grad = grad_weights
+        self.biases.grad = grad_bias
 
         grad_input = grad_output @ self.weights.T
         return grad_input

@@ -50,7 +50,7 @@ class Model:
         output = X
 
         for layer in self.layers:
-            output = layer.forward(X)
+            output = layer.forward(output)
 
         return output
 
@@ -67,15 +67,15 @@ class Model:
 
     def get_parameters(self) -> List[Tensor]:
         """
-        Return all model paramters (weights and biases).
+        Return all model parameters (weights and biases).
 
-        :return: List of tensors representing the paramters
+        :return: List of tensors representing the parameters
         """
-        paramters = []
+        parameters = []
         for layer in self.layers:
-            paramters.extend(layer.get_paramters())
+            parameters.extend(layer.get_parameters())
 
-        return paramters
+        return parameters
 
     def zero_grad(self) -> None:
         """
@@ -90,14 +90,14 @@ class Model:
         """
         Load the model's weights and biases from an HDF5 file.
 
-        :param file_path: File path where is the target paramters.
+        :param file_path: File path where is the target parameters.
         """
 
         with h5py.File(file_path, 'r') as file:
             for idx, layer in enumerate(self.layers):
                 layer_group = file[f'layer_{idx}']
-                paramters = layer.get_paramters()
-                for i, param in enumerate(paramters):
+                parameters = layer.get_parameters()
+                for i, param in enumerate(parameters):
                     param.data = layer_group[f'param_{i}'][:]
 
         print('Model loaded successfully')
@@ -106,14 +106,14 @@ class Model:
         """
         Save model's weights and biases in an HDF5 file.
 
-        :param file_path: File path where is the target paramters.
+        :param file_path: File path where is the target parameters.
         """
 
         with h5py.File(file_path, 'w') as file:
             for idx, layer in enumerate(self.layers):
                 layer_group = file.create_group(f'layer_{idx}')
-                paramters = layer.get_paramters()
-                for i, param in enumerate(paramters):
+                parameters = layer.get_parameters()
+                for i, param in enumerate(parameters):
                     param.data = layer_group[f'layer_{i}'][:]
 
         print(f'Model save in {file_path}')
@@ -134,10 +134,10 @@ class Model:
         loss_result = self.loss.forward(predictions, y)
 
         # backpropagation pass
-        grad_output = self.loss.backward(loss_result)
+        grad_output = self.loss.backward()
         self.backward(grad_output)
 
-        # paramters updated
+        # parameters updated
         self.optimizer.step()
         self.optimizer.zero_grad()
 

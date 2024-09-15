@@ -6,12 +6,12 @@ from .base import Optimizer
 class SGD(Optimizer):
     def __init__(
         self,
-        paramters: List[Tensor],
+        parameters: List[Tensor],
         learning_rate: float = 0.01
     ) -> None:
-        super().__init__(paramters, learning_rate)
+        super().__init__(parameters, learning_rate)
 
     def step(self):
-        for paramter in self.paramters:
+        for paramter in self.parameters:
             if paramter.requires_grad:
                 paramter -= self.learning_rate * paramter.grad

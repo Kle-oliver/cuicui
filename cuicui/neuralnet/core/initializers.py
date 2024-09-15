@@ -31,7 +31,7 @@ def xavier(input_size: int, output_size: int) -> Tensor:
     Initializes weights with Xavier Initialization (Glorot Uniform).
     """
     limit = np.sqrt(6 / (input_size + output_size))
-    return Tensor(np.random.uniform(-limit, limit, (input_size + output_size)))
+    return Tensor(np.random.uniform(-limit, limit, (input_size, output_size)))
 
 
 def he(input_size: int, output_size: int) -> Tensor:
@@ -39,5 +39,5 @@ def he(input_size: int, output_size: int) -> Tensor:
     Initializes weights using He Initialization.
     """
     return Tensor(
-        np.random.random(input_size, output_size) * np.sqrt(2/input_size)
+        np.random.randn(input_size, output_size) * np.sqrt(2/input_size)
     )

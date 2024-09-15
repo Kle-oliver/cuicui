@@ -5,7 +5,7 @@ from ..core import Tensor
 
 class Layer(ABC):
     def __init__(self) -> None:
-        self.paramters: List[Tensor] = []
+        self.parameters: List[Tensor] = []
         self.gradients: Optional[Tensor] = []
 
     @abstractmethod
@@ -19,15 +19,15 @@ class Layer(ABC):
     def backward(self, grad_output: Tensor) -> Tensor:
         pass
 
-    def get_paramters(self) -> List[Tensor]:
+    def get_parameters(self) -> List[Tensor]:
         """
-        Return paramters (weights and biases) of Layer.
+        Return parameters (weights and biases) of Layer.
         """
-        return self.paramters
+        return self.parameters
 
     def get_gradients(self) -> List[Tensor]:
         """
-        Return gradients of Layer paramters.
+        Return gradients of Layer parameters.
         """
         return self.gradients
 
