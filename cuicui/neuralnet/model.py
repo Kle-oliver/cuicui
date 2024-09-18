@@ -35,19 +35,21 @@ class Model:
         :param metrics: List of function metrics loss for
         performance monitoring.
         """
+        optimizer.parameters = self.get_parameters()
+
         self.loss = loss
         self.optimizer = optimizer
         self.metrics = {metric.__name__: metric for metric in metrics}
 
-    def forward(self, X: Tensor) -> Tensor:
+    def forward(self, x: Tensor) -> Tensor:
         """
         Execute forward propagation through all avaible layers of the model.
 
-        :param X: The input tensor.
+        :param x: The input tensor.
         :return: The output after passing through all the layers.
         """
 
-        output = X
+        output = x
 
         for layer in self.layers:
             output = layer.forward(output)
@@ -63,7 +65,7 @@ class Model:
         """
 
         for layer in reversed(self.layers):
-            layer.backward(grad_output)
+            grad_output = layer.backward(grad_output)
 
     def get_parameters(self) -> List[Tensor]:
         """

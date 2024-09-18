@@ -42,6 +42,7 @@ class Dense(Layer):
 
         grad_weights = self.input.T @ grad_output
         grad_bias = np.sum(grad_output, axis=0, keepdims=True)
+
         self.gradients = [grad_weights, grad_bias]
         self.weights.grad = grad_weights
         self.biases.grad = grad_bias

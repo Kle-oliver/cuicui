@@ -6,7 +6,7 @@ from .base import Optimizer
 class SGD(Optimizer):
     def __init__(
         self,
-        parameters: List[Tensor],
+        parameters: List[Tensor] = [],
         learning_rate: float = 0.01
     ) -> None:
         super().__init__(parameters, learning_rate)
