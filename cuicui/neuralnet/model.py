@@ -92,15 +92,14 @@ class Model:
         """
         Load the model's weights and biases from an HDF5 file.
 
-        :param file_path: File path where is the target parameters.
+        :param file_path: File path where the target parameters are located.
         """
-
         with h5py.File(file_path, 'r') as file:
             for idx, layer in enumerate(self.layers):
                 layer_group = file[f'layer_{idx}']
                 parameters = layer.get_parameters()
                 for i, param in enumerate(parameters):
-                    param.data = layer_group[f'param_{i}'][:]
+                    param[:] = layer_group[f'param_{i}'][:]
 
         print('Model loaded successfully')
 
@@ -116,7 +115,7 @@ class Model:
                 layer_group = file.create_group(f'layer_{idx}')
                 parameters = layer.get_parameters()
                 for i, param in enumerate(parameters):
-                    param.data = layer_group[f'layer_{i}'][:]
+                    layer_group.create_dataset(f'param_{i}', data=param.data)
 
         print(f'Model save in {file_path}')
 
