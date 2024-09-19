@@ -23,8 +23,7 @@ class Activation(Operation):
 
     def backward(self, output_grad: Tensor) -> None:
         x = self.inputs[0]
-        print(f"output_grad shape: {output_grad.shape}")
-        print(f"activation_grad shape: {self._activation_grad(x).shape}")
+
         grad_input = output_grad * self._activation_grad(x)
         if x.requires_grad:
             x.backward(grad_input)

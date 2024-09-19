@@ -267,7 +267,8 @@ class Model:
         """
 
         predictions = self.forward(X)
-        loss_result = self.loss.forward(X, y)
+        loss_result = self.loss.forward(predictions, y)
+
         metrics_result = {
             metric_name: metric_fn(predictions, y)
             for metric_name, metric_fn in self.metrics.items()
