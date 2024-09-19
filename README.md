@@ -58,7 +58,7 @@ Are you ready for this? Follow the steps below:
 
 ## **How CuiCui Works**
 
-CuiCui is designed to help you build, test, and deploy machine learning models with ease. It includes a collection of pre-built modules for common tasks such as data preprocessing, model training, and evaluation.
+CuiCui is designed to help you build, test, and deploy machine learning models with ease. It includes a collection of pre-built modules for common tasks such as neural network, model registry, model training, evaluation and more.
 
 ### **Basic Usage**
 
