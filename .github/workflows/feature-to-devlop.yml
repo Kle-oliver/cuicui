@@ -1,0 +1,31 @@
+name: CI for Feature to Develop
+
+on:
+  pull_request:
+    branches:
+      - develop
+    paths-ignore:
+      - '**/docs/**'
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # Certifique-se de ter um requirements.txt ou equivalente
+
+    - name: Run Tests
+      run: |
+        pytest  # Execute seus testes com pytest ou outro comando de teste
