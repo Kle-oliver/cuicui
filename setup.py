@@ -27,5 +27,8 @@ setup(
     extras_require={
         'test': ['pytest>=8.3.3,<9.0.0']
     },
-    include_package_data=True
+    include_package_data=True,
+    package_data={
+        'cuicui': ['utils/*.png', 'utils/*.jpg']
+    }
 )
