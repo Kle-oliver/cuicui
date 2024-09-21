@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='cuicui',
-    version='0.1.1',
+    version='0.1.2',
     description='CuiCui is designed to assit with tasks related to AI/ML',
     long_description=open("README.md").read(),
     long_description_content_type='text/markdown',

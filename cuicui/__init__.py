@@ -18,7 +18,12 @@ Now, if you'd like to know more about me:
     - `GitHub <https://github.com/Kle-oliver>`_
 """
 
+import importlib.resources
 from PIL import Image
 
-cui_01 = Image.open('cuicui/utils/cui_01.png')
-cui_02 = Image.open('cuicui/utils/cui_02.png')
+
+with importlib.resources.path('cuicui.utils', 'cui_01.png') as cui_01_path:
+    cui_01 = Image.open(cui_01_path)
+
+with importlib.resources.path('cuicui.utils', 'cui_02.png') as cui_02_path:
+    cui_02 = Image.open(cui_02_path)
